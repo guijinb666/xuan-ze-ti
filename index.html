@@ -135,11 +135,11 @@
   }
 
   function optHTML(o, cls, note) {
-    return '<div class="opt ' + cls + ' opt-static"><span class="key exam-serif">' + o.label + '</span><span style="flex:1">' + esc(o.text) + '</span>' + (note ? '<span class="small" style="flex:none;font-weight:500;color:' + (note === '正确答案' ? 'var(--accent)' : note === '你的选择' ? 'var(--wrong)' : 'var(--dim)') + '">' + note + '</span>' : '') + '</div>';
+    return '<div class="opt ' + cls + ' opt-static"><span class="key exam-serif">' + o.letter + '</span><span style="flex:1">' + esc(o.text) + '</span>' + (note ? '<span class="small" style="flex:none;font-weight:500;color:' + (note === '正确答案' ? 'var(--accent)' : note === '你的选择' ? 'var(--wrong)' : 'var(--dim)') + '">' + note + '</span>' : '') + '</div>';
   }
   function reviewCard(item, labelLine) {
     var opts = item.options.map(function (o) {
-      var isAns = o.label === item.answer, isCh = o.label === item.chosen;
+      var isAns = o.letter === item.answer, isCh = o.letter === item.chosen;
       var cls = isAns ? 'correct' : (isCh ? 'wrongpick' : '');
       var note = isAns ? '正确答案' : (isCh ? '你的选择' : '');
       return optHTML(o, cls, note);
@@ -196,8 +196,8 @@
     var answered = q.ids.filter(function (x) { return q.answers[x]; }).length;
     var total = q.ids.length, isLast = state.idx === total - 1, all = answered === total;
     var opts = item.options.map(function (o) {
-      var sel = q.answers[id] === o.label ? ' sel' : '';
-      return '<button class="opt' + sel + '" onclick="choose(' + id + ',\'' + o.label + '\')"><span class="key exam-serif">' + o.label + '</span><span>' + esc(o.text) + '</span></button>';
+      var sel = q.answers[id] === o.letter ? ' sel' : '';
+      return '<button class="opt' + sel + '" onclick="choose(' + id + ',\'' + o.letter + '\')"><span class="key exam-serif">' + o.letter + '</span><span>' + esc(o.text) + '</span></button>';
     }).join('');
     var dots = q.ids.map(function (qid, i) {
       var cls = i === state.idx ? 'cur' : (q.answers[qid] ? 'done' : '');
